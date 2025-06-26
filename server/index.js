@@ -18,8 +18,19 @@ app.post("/adduser", async(request, response) => {
     catch(err){
         console.log(err);
     }
-
 })
+
+app.get("/getusers", async(request, response) => {
+    try {
+        const result = await User.find();
+        response.status(200).send({users : result});
+    }
+    catch(err){
+        console.log(err);
+    }
+})
+
+
 app.listen(2000, () => {
     console.log("Server Started");
 })

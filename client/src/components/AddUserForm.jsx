@@ -1,22 +1,24 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { toast } from 'react-hot-toast'
 
 const AddUserForm = () => {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleUserAddition = async(f) => {
+  const handleUserAddition = async (f) => {
     f.preventDefault();
     try {
       const response = await axios.post("http://localhost:2000/adduser", {
-        name, 
+        name,
         message
       });
       console.log(response);
+      toast.success(response.data.message);
       setName("");
       setMessage("");
     }
-    catch(err){
+    catch (err) {
       console.log(err);
     }
   }
@@ -28,7 +30,7 @@ const AddUserForm = () => {
             <legend className="fieldset-legend">Add User</legend>
 
             <label className="label">Name</label>
-            <input type="text" className="input" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}/>
+            <input type="text" className="input" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
 
             <label className="label">Message</label>
             <input type="text" className="input" placeholder="Message" value={message} onChange={(e) => setMessage(e.target.value)} />
