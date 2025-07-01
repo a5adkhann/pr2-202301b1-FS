@@ -30,6 +30,18 @@ app.get("/getusers", async(request, response) => {
     }
 })
 
+app.put("/updateuser/:id", async(request, response) => {
+    const {name, message} = request.body;
+    const id = request.params.id;
+    try {
+        await User.updateOne({_id: id}, {name, message});
+        response.status(200).send({message: "User updated successfully"});
+    }
+    catch(err){
+        console.log(err);
+    }
+})
+
 
 app.listen(2000, () => {
     console.log("Server Started");
