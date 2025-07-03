@@ -21,7 +21,7 @@ const FetchUsersTable = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, [users])
+  }, [])
 
   const handleEdit = (user) => {
     setEditingId(user._id);
@@ -41,6 +41,22 @@ const FetchUsersTable = () => {
       setEditingId(null);
       setEditName("");
       setEditMessage("");
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+
+  const handleDelete = async(id) => {
+    try {
+      const response = await axios.delete(`http://localhost:2000/deleteuser/${id}`);
+      console.log(response);
+      toast.success(response.data.message, {
+        iconTheme: {
+          primary: "red"
+        }
+      });
+      fetchUsers();
     }
     catch(err){
       console.log(err);
@@ -94,7 +110,7 @@ const FetchUsersTable = () => {
                 :
                 <>
                 <button className="btn btn-soft btn-info" onClick={() => handleEdit(user)}>Edit</button>
-                <button className="btn btn-soft btn-error">Delete</button>
+                <button className="btn btn-soft btn-error" onClick={() => handleDelete(user._id)}>Delete</button>
                 </>
               }
               </td>

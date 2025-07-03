@@ -43,6 +43,21 @@ app.put("/updateuser/:id", async(request, response) => {
 })
 
 
+app.delete("/deleteuser/:id", async(request, response) => {
+    const id = request.params.id;
+    try {
+        await User.deleteOne({_id: id});
+        response.status(200).send({message: "User deleted successfully"});
+    }   
+    catch(err){
+        console.log(err);
+    }
+})
+
+
+
+
+
 app.listen(2000, () => {
     console.log("Server Started");
 })
